@@ -1,0 +1,69 @@
+.currency {
+  &__wrapper {
+    padding: 10px;
+  }
+
+  &__slogan {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  &__box {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  &__item {
+    padding: 10px 20px;
+    cursor: url('../../images/hand.png'), auto;
+    transition: all 1s;
+    color: #2196f3;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: #fff;
+    border: 1px solid #d2d5d6;
+
+    &:hover {
+      background-color: rgb(242, 252, 255);
+      border: 1px solid rgb(103, 184, 247);
+    }
+
+    &:before {
+      display: none;
+    }
+    &:after {
+      display: none;
+    }
+
+    &-active {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 1s;
+      color: #fff;
+      background-color: #2196f3;
+      border: 1px solid #2196f3;
+      cursor: url('../../images/hand.png'), auto;
+    }
+  }
+
+  &__input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+
+    &-active {
+      background-color: blue;
+    }
+  }
+}
+
+.currency__input:checked {
+  background-color: blue;
+}

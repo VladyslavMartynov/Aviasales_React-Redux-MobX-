@@ -1,0 +1,17 @@
+.logo {
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__icon {
+    width: 10%;
+    height: 10%;
+    cursor: url('../../images/hand.png'), auto;
+    transition: transform 1s;
+
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+}

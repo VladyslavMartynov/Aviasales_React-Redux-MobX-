@@ -1,0 +1,61 @@
+.checkbox {
+  &__slogan {
+    color: #4a4a4a;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  &__container {
+    padding: 20px;
+  }
+
+  &__item {
+    padding-left: 15px;
+
+    @media (min-width: 375px) {
+      padding-left: 10px;
+    }
+  }
+
+  &__label {
+    font-size: 16px;
+    cursor: url('../../images/hand.png'), auto;
+    color: black;
+  }
+
+  &__label {
+    padding-left: 20px;
+  }
+
+  &__checker {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 10px;
+    background: url('../../images/cheker-off.svg') no-repeat;
+    cursor: url('../../images/hand.png'), auto;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  input:checked + &__checker {
+    background-image: url('../../images/cheker-on.svg');
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}

@@ -1,0 +1,23 @@
+.spinner {
+  margin: 0 auto;
+  width: 5rem;
+  height: 5rem;
+  border-width: 6px;
+  border-top-color: white;
+  border-left-color: white;
+  animation: spinner 400ms linear infinite;
+  border-bottom-color: white;
+  border-right-color: blue;
+  border-style: solid;
+  border-radius: 50%;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

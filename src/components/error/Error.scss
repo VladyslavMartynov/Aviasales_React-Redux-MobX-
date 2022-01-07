@@ -1,0 +1,13 @@
+.error {
+  &__wrapper {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+
+  &__slogan {
+    font-size: 48px;
+    line-height: 1.5;
+    font-weight: bold;
+    text-align: center;
+  }
+}
