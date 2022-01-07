@@ -1,4 +1,4 @@
-import { ICurrency } from '../redux/actions/types'
+import { ICurrency } from '../mobX/types/types'
 
 export const calculateCurrency = (
   currencyRate: ICurrency,

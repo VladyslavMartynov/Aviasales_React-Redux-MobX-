@@ -2,7 +2,8 @@
   &__container {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
     background-color: #fff;
     max-height: 400px;
     min-width: 400px;

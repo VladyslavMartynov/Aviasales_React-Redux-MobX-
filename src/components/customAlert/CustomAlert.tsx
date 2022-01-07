@@ -1,29 +1,28 @@
 import * as React from 'react'
 import { useCallback } from 'react'
+import { observer } from 'mobx-react'
+import modalStore from '../../mobX/store/ModalStore'
 import Alert from '@mui/material/Alert/Alert'
 import Stack from '@mui/material/Stack/Stack'
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import { modalDataSelector } from '../../redux/selectors/selectors'
-import { setModalState } from '../../redux/actions/actionCreators/actionCreators'
-
 import '../form/Form.scss'
 
-export const CustomAlert: React.FC = (): JSX.Element => {
-  const dispatch = useAppDispatch()
-  const { isOpened } = useAppSelector(modalDataSelector)
+export const CustomAlert: React.FC = observer(
+  (): JSX.Element => {
+    const { isOpened } = modalStore
 
-  const toggleModal = useCallback(() => {
-    dispatch(setModalState(!isOpened))
-  }, [isOpened])
+    const toggleModal = useCallback(() => {
+      modalStore.toggleModal(!isOpened)
+    }, [isOpened])
 
-  return (
-    <div className="alert__div">
-      <Stack sx={{ width: '100%' }} spacing={2}>
-        <Alert onClose={toggleModal}>Operation success!</Alert>
-      </Stack>
-    </div>
-  )
-}
+    return (
+      <div className="alert__div">
+        <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert onClose={toggleModal}>Operation success!</Alert>
+        </Stack>
+      </div>
+    )
+  }
+)
 
 export default CustomAlert

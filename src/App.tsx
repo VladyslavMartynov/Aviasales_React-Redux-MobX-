@@ -1,5 +1,4 @@
 import React from 'react'
-
 import TicketsList from './components/ticketsList/TicketsList'
 import Logo from './components/logo/Logo'
 import SideBar from './components/sidebar/SideBar'

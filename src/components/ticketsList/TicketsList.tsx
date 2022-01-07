@@ -1,71 +1,67 @@
 import React, { useCallback, useEffect } from 'react'
-
-import { TicketMiddleWare } from '../../middlewares/TicketMiddleWare/TicketMiddleWare'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import {
-  filterDataSelector,
-  ticketDataSelector,
-} from '../../redux/selectors/selectors'
+import { observer } from 'mobx-react'
+import ticketStore from '../../mobX/store/TicketStore'
+import filterStore from '../../mobX/store/FilterStore'
+import { ITicketData } from '../../mobX/types/types'
 import { calculateCurrency } from '../../helpers/helpers'
-import { ITicketData } from '../../redux/actions/types'
 
 import TicketItem from '../ticketItem/TicketItem'
 import Spinner from '../spinner/Spinner'
 import ErrorComponent from '../error/Error'
+
 import './TicketList.scss'
 
-const TicketsList: React.FC = (): JSX.Element => {
-  const dispatch = useAppDispatch()
-  const { ticketsData, isLoading, isError, currencyRate } = useAppSelector(
-    ticketDataSelector
-  )
+const TicketsList: React.FC = observer(
+  (): JSX.Element => {
+    useEffect(() => {
+      ticketStore.fetchTickets()
+    }, [ticketStore.fetchTickets])
 
-  const { currencyType, stops } = useAppSelector(filterDataSelector)
+    const filterTickets = (tickets: ITicketData[]): ITicketData[] => {
+      return tickets.filter((ticket) => {
+        if (filterStore.stops.all) return true
+        if (filterStore.stops.without && ticket.stops === 0) return true
+        if (filterStore.stops.one && ticket.stops === 1) return true
+        if (filterStore.stops.two && ticket.stops === 2) return true
+        if (filterStore.stops.three && ticket.stops === 3) return true
+      })
+    }
 
-  useEffect(() => {
-    dispatch(TicketMiddleWare())
-  }, [dispatch])
+    const spawnTicketsList = (): JSX.Element[] => {
+      return filterTickets(ticketStore.ticketsData).map((ticket) => {
+        return (
+          <TicketItem
+            key={ticket.price}
+            ticket={{
+              ...ticket,
+              price: calculateCurrency(
+                ticketStore.currencyRate,
+                ticket.price,
+                filterStore.currencyType
+              ),
+            }}
+          />
+        )
+      })
+    }
 
-  const filterTickets = (tickets: ITicketData[]) => {
-    return tickets.filter((ticket) => {
-      if (stops.all) return true
-      if (stops.without && ticket.stops === 0) return true
-      if (stops.one && ticket.stops === 1) return true
-      if (stops.two && ticket.stops === 2) return true
-      if (stops.three && ticket.stops === 3) return true
-    })
+    const displaySpinner = () => {
+      useCallback(() => {
+        if (ticketStore.isError) {
+          return <ErrorComponent />
+        } else if (ticketStore.isLoading) {
+          return <Spinner />
+        }
+      }, [ticketStore.isError, ticketStore.isLoading])
+    }
+
+    return (
+      <>
+        {displaySpinner()}
+        {<div className="ticket__container">{spawnTicketsList()}</div>}
+      </>
+    )
   }
-
-  const spawnTicketsList = useCallback((): JSX.Element[] => {
-    return filterTickets(ticketsData).map((ticket) => {
-      return (
-        <TicketItem
-          key={ticket.price}
-          ticket={{
-            ...ticket,
-            price: calculateCurrency(currencyRate, ticket.price, currencyType),
-          }}
-        />
-      )
-    })
-  }, [filterTickets(ticketsData)])
-
-  const displaySpinner = () => {
-    useCallback(() => {
-      if (isError) {
-        return <ErrorComponent />
-      } else if (isLoading) {
-        return <Spinner />
-      }
-    }, [isError, isLoading])
-  }
-
-  return (
-    <>
-      {displaySpinner()}
-      {<div className="ticket__container">{spawnTicketsList()}</div>}
-    </>
-  )
-}
+)
 
 export default TicketsList

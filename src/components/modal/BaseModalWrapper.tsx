@@ -1,17 +1,15 @@
 import React from 'react'
-import { setModalState } from '../../redux/actions/actionCreators/actionCreators'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import { modalDataSelector } from '../../redux/selectors/selectors'
+import { observer } from 'mobx-react'
+import modalStore from '../../mobX/store/ModalStore'
 
 import Modal from './Modal'
 import './Modal.scss'
 
-const BaseModalWrapper: React.FC = ({ children }) => {
-  const dispatch = useAppDispatch()
-  const { isOpened } = useAppSelector(modalDataSelector)
+const BaseModalWrapper: React.FC = observer(({ children }) => {
+  const { isOpened } = modalStore
 
   const toggleModal = (): void => {
-    dispatch(setModalState(!isOpened))
+    modalStore.toggleModal(!isOpened)
   }
 
   if (!isOpened) {
@@ -28,6 +26,6 @@ const BaseModalWrapper: React.FC = ({ children }) => {
       </div>
     </Modal>
   )
-}
+})
 
 export default BaseModalWrapper

@@ -137,7 +137,7 @@ const FormComponent: React.FC = (): JSX.Element => {
     },
   ]
 
-  const handleAlertAppearance = () => {
+  const handleAlertAppearance = (): JSX.Element => {
     const condition = Object.values(formErrors).length === 0 && isSubmit
     return condition ? <CustomAlert /> : <div />
   }
@@ -172,7 +172,11 @@ const FormComponent: React.FC = (): JSX.Element => {
         <form onSubmit={handleSubmit}>
           <div className="input__wrapper">
             {spawnInputList()}
-            <button className="form__btn" type="submit">
+            <button
+              className="form__btn"
+              type="submit"
+              onClick={handleAlertAppearance}
+            >
               Buy
             </button>
           </div>
